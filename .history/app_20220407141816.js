@@ -6,10 +6,10 @@ import path from 'path';
 
 const app = express();
 const PORT = 8080;
-const __dirname = path.resolve()
+// const __dirname = path.dirname()
 
 app.use(morgan('tiny'));
-app.use(express.static(path.join(__dirname, '/public/')))
+app.use(express.static(path.join(dirname, '/public/')))
 
 app.get('/', (req, res) => {
     res.send('ELO')
