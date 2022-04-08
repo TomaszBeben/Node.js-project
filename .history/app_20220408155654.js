@@ -14,7 +14,7 @@ const __dirname = path.resolve()
 const sessionRouter = express.Router()
 
 app.use(morgan('tiny'));
-app.use(express.static(path.join(__dirname, '/public/'))) // index.html from public folder
+app.use(express.static(path.join(__dirname, '/public/'))) // index.html prom public folder
 
 app.set('views', './src/views');
 app.set('view engine', 'ejs')
