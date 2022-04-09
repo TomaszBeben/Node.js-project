@@ -3,7 +3,7 @@ import chalk from 'chalk';
 import debug from 'debug';
 import morgan from 'morgan';
 import path from 'path';
-import sessionRouter from './src/routers/sessionsRouter.js'
+import sessionRouter from './src/routers/sessionsRouter'
 
 const app = express();
 const PORT = process.env.PORT || 3000;

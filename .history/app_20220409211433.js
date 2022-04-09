@@ -3,7 +3,7 @@ import chalk from 'chalk';
 import debug from 'debug';
 import morgan from 'morgan';
 import path from 'path';
-import sessionRouter from './src/routers/sessionsRouter.js'
+import sessionsRouter from './src/routers/sessionsRoter'
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -15,7 +15,6 @@ app.use(express.static(path.join(__dirname, '/public/'))); // index.html from pu
 app.set('views', './src/views');
 app.set('view engine', 'ejs');
 
-
 app.use('/sessions', sessionRouter);
 app.get('/', (req, res) => {
     res.render('index', { title: 'my first view engined file', data: ['a', 'b', 'c'] })
@@ -23,5 +22,6 @@ app.get('/', (req, res) => {
 
 app.listen(PORT, () => {
     console.log(chalk.green(`listening on port: ${PORT}`));
+    console.log(sessionsRouter);
     debug(chalk.green(`listening on port: ${PORT}`));
 });

@@ -3,7 +3,10 @@ import chalk from 'chalk';
 import debug from 'debug';
 import morgan from 'morgan';
 import path from 'path';
-import sessionRouter from './src/routers/sessionsRouter.js'
+import { createRequire } from 'module';
+
+const require = createRequire(import.meta.url);
+const sessionsRouter = require('./src/routers/sessionsRoter)
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -14,7 +17,6 @@ app.use(express.static(path.join(__dirname, '/public/'))); // index.html from pu
 
 app.set('views', './src/views');
 app.set('view engine', 'ejs');
-
 
 app.use('/sessions', sessionRouter);
 app.get('/', (req, res) => {

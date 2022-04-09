@@ -3,11 +3,12 @@ import chalk from 'chalk';
 import debug from 'debug';
 import morgan from 'morgan';
 import path from 'path';
-import sessionRouter from './src/routers/sessionsRouter.js'
+import {sessionRouter} from './src/routers/sessionsRoter'
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 const __dirname = path.resolve();
+const sessionRouter = express.Router();
 
 app.use(morgan('tiny'));
 app.use(express.static(path.join(__dirname, '/public/'))); // index.html from public folder
