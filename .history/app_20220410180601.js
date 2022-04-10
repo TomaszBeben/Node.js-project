@@ -4,7 +4,6 @@ import debug from 'debug';
 import morgan from 'morgan';
 import path from 'path';
 import sessionRouter from './src/routers/sessionsRouter.js'
-import adminRouter from './src/routers/adminRouter.js'
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -18,8 +17,6 @@ app.set('view engine', 'ejs');
 
 
 app.use('/sessions', sessionRouter);
-app.use('/admin', adminRouter);
-
 app.get('/', (req, res) => {
     res.render('index')
 });
