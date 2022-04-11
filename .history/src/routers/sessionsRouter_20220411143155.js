@@ -1,7 +1,7 @@
 import express from 'express';
 import { createRequire } from 'module';
 import debug from 'debug';
-import { MongoClient, ObjectId } from 'mongodb';
+import { MongoClient } from 'mongodb';
 import dotenv from 'dotenv';
 
 const require = createRequire(import.meta.url);
@@ -44,11 +44,8 @@ sessionRouter.route('/:id').get((req, res) => {
             client = await MongoClient.connect(url);
             debug('Connected to DB!!');
             const db = client.db(dbName)
-            const session = await db.collection('sessions').findOne({_id: new ObjectId(id)})
-
-            return res.render('session', {
-                session
-            });
+            const sessions = await db.collection('sessions').find().toArray();
+            return res.render('sessions', {sessions})
         }catch(error){
             debug(error.stack)
         }finally{
@@ -56,6 +53,9 @@ sessionRouter.route('/:id').get((req, res) => {
         }
     };
     mongo();
+    res.render('session', {
+        session: sessions[id]
+    });
 });
 
 export default sessionRouter;

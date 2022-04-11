@@ -1,7 +1,7 @@
 import express from 'express';
 import { createRequire } from 'module';
 import debug from 'debug';
-import { MongoClient, ObjectId } from 'mongodb';
+import { MongoClient } from 'mongodb';
 import dotenv from 'dotenv';
 
 const require = createRequire(import.meta.url);
@@ -20,8 +20,9 @@ sessionRouter.route('/').get((req, res) => {
             client = await MongoClient.connect(url);
             debug('Connected to DB!!');
             const db = client.db(dbName)
-            const sessions = await db.collection('sessions').find().toArray();
-            return res.render('sessions', {sessions})
+            await db.collection('sessions').insertMany(sessions);
+            const response = await db.collection('sessions').find().toArray();
+            return res.json(response)
         }catch(error){
             debug(error.stack)
         }finally{
@@ -29,33 +30,16 @@ sessionRouter.route('/').get((req, res) => {
         }
     };
     mongo();
+    res.render('sessions', {
+        sessions
+    });
 });
 
 sessionRouter.route('/:id').get((req, res) => {
     const id = req.params.id;
-    dotenv.config();
-    const url = process.env.DB_CONNECTION;
-
-    const dbName = 'test';
-
-    async function mongo(){
-        let client;
-        try{
-            client = await MongoClient.connect(url);
-            debug('Connected to DB!!');
-            const db = client.db(dbName)
-            const session = await db.collection('sessions').findOne({_id: new ObjectId(id)})
-
-            return res.render('session', {
-                session
-            });
-        }catch(error){
-            debug(error.stack)
-        }finally{
-            client.close()
-        }
-    };
-    mongo();
+    res.render('session', {
+        session: sessions[id]
+    });
 });
 
 export default sessionRouter;

@@ -1,7 +1,7 @@
 import express from 'express';
 import debug from 'debug';
 
-import { MongoClient } from 'mongodb';
+import { MongoClient, ObjectID } from 'mongodb';
 import { createRequire } from 'module';
 
 import dotenv from 'dotenv';
@@ -25,7 +25,7 @@ adminRouter.route('/').get((req, res) => {
             debug('Connected to DB!!');
             const db = client.db(dbName)
             await db.collection('sessions').insertMany(sessions);
-            const response = await db.collection('sessions').find().toArray();
+            const response = await db.collection('sessions').findOne({_id: new ObjectID(id)});
             return res.json(response)
         }catch(error){
             debug(error.stack)

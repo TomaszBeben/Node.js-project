@@ -44,7 +44,7 @@ sessionRouter.route('/:id').get((req, res) => {
             client = await MongoClient.connect(url);
             debug('Connected to DB!!');
             const db = client.db(dbName)
-            const session = await db.collection('sessions').findOne({_id: new ObjectId(id)})
+            const sessions = await db.collection('sessions').findOne({_id: new ObjectId(id)})
 
             return res.render('session', {
                 session

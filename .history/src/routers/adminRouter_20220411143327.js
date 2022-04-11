@@ -25,7 +25,7 @@ adminRouter.route('/').get((req, res) => {
             debug('Connected to DB!!');
             const db = client.db(dbName)
             await db.collection('sessions').insertMany(sessions);
-            const response = await db.collection('sessions').find().toArray();
+            const response = await db.collection('sessions').findOne(_id);
             return res.json(response)
         }catch(error){
             debug(error.stack)
