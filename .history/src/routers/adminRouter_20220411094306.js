@@ -1,39 +1,33 @@
 import express from 'express';
 import debug from 'debug';
-
 import { MongoClient } from 'mongodb';
-import { createRequire } from 'module';
-
 import dotenv from 'dotenv';
+import { createRequire } from 'module';
 
 const require = createRequire(import.meta.url);
 const sessions = require('../data/sessions.json');
 
 const adminRouter = express.Router();
-
 adminRouter.route('/').get((req, res) => {
-
-    dotenv.config();
     const url = process.env.DB_CONNECTION;
-
-    const dbName = 'test';
-
-    async function mongo(){
-        let client;
+    const client = new MongoClient(url)
+    const dbName = 'test'
+    
+    (async function mongo(){
+        
         try{
-            client = await MongoClient.connect(url);
-            debug('Connected to DB!!');
+            await client.connect();
+            debug('Conected to DB!!');
+
             const db = client.db(dbName)
-            const request = await db.collection('sessions').insertMany(sessions);
-            const response = await db.collection('sessions').find().toArray()
-            return res.json(response)
+
+            const response = await db.collection('sessions').insertMany(sessions);
+            res.json(response)
+
         }catch(error){
             debug(error.stack)
-        }finally{
-            client.close()
         }
-    };
-    mongo();
+    }());
 })
 
 export default adminRouter;

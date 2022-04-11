@@ -18,22 +18,22 @@ adminRouter.route('/').get((req, res) => {
 
     const dbName = 'test';
 
-    async function mongo(){
+    (async function mongo(){
         let client;
         try{
             client = await MongoClient.connect(url);
-            debug('Connected to DB!!');
+
+            debug('Conected to DB!!');
+
             const db = client.db(dbName)
-            const request = await db.collection('sessions').insertMany(sessions);
-            const response = await db.collection('sessions').find().toArray()
-            return res.json(response)
+
+            const response = await db.collection.insertMany(sessions);
+            res.json(response)
+
         }catch(error){
             debug(error.stack)
-        }finally{
-            client.close()
         }
-    };
-    mongo();
+    }());
 })
 
 export default adminRouter;

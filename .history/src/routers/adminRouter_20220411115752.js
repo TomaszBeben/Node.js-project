@@ -26,6 +26,7 @@ adminRouter.route('/').get((req, res) => {
             const db = client.db(dbName)
             const request = await db.collection('sessions').insertMany(sessions);
             const response = await db.collection('sessions').find().toArray()
+
             return res.json(response)
         }catch(error){
             debug(error.stack)
