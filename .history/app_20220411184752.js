@@ -5,7 +5,7 @@ import morgan from 'morgan';
 import path from 'path';
 import sessionRouter from './src/routers/sessionsRouter.js';
 import adminRouter from './src/routers/adminRouter.js';
-import authRouter from './src/routers/authRouter.js';
+import adminRouter from './src/routers/authRouter.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -22,7 +22,6 @@ app.set('view engine', 'ejs');
 
 app.use('/sessions', sessionRouter);
 app.use('/admin', adminRouter);
-app.use('/auth', authRouter);
 
 
 app.get('/', (req, res) => {

@@ -22,7 +22,6 @@ app.set('view engine', 'ejs');
 
 app.use('/sessions', sessionRouter);
 app.use('/admin', adminRouter);
-app.use('/auth', authRouter);
 
 
 app.get('/', (req, res) => {
