@@ -21,7 +21,7 @@ app.use(express.static(path.join(__dirname, '/public/'))); // index.html from pu
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
-app.use(session({secret: 'tomek', resave: true, saveUninitialized: true}));
+app.use(session({secret: 'tomek', saveUninitialized: true}));
 
 passportConfig(app);
 

@@ -6,11 +6,13 @@ import path from 'path';
 import sessionRouter from './src/routers/sessionsRouter.js';
 import adminRouter from './src/routers/adminRouter.js';
 import authRouter from './src/routers/authRouter.js';
-import passportConfig from './src/config/passport.js'
 
 import passport from 'passport';
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
+
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -23,10 +25,11 @@ app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(session({secret: 'tomek', resave: true, saveUninitialized: true}));
 
-passportConfig(app);
+// require('./src/config/passport.js')(app);
 
 app.set('views', './src/views');
 app.set('view engine', 'ejs');
+
 
 app.use('/sessions', sessionRouter);
 app.use('/admin', adminRouter);

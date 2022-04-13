@@ -6,7 +6,6 @@ import path from 'path';
 import sessionRouter from './src/routers/sessionsRouter.js';
 import adminRouter from './src/routers/adminRouter.js';
 import authRouter from './src/routers/authRouter.js';
-import passportConfig from './src/config/passport.js'
 
 import passport from 'passport';
 import cookieParser from 'cookie-parser';
@@ -21,12 +20,11 @@ app.use(express.static(path.join(__dirname, '/public/'))); // index.html from pu
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
-app.use(session({secret: 'tomek', resave: true, saveUninitialized: true}));
-
-passportConfig(app);
+app.use(session({secret: 'tomek', resave: true, saveUninitialized: true}))
 
 app.set('views', './src/views');
 app.set('view engine', 'ejs');
+
 
 app.use('/sessions', sessionRouter);
 app.use('/admin', adminRouter);
