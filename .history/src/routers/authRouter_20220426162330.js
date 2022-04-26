@@ -21,8 +21,7 @@ authRouter.route('/signup').post((req, res) => {
 
             const db = client.db(dbName);
             const user = { username, password };
-            await db.collection('user').insertMany(user);
-            // const results = await db.collection('user').insertOne(user)
+            const results = db.collection('user').insertOne(user)
             debug(results)
             req.login(results.ops[0], () => {
                 res.redirect('/auth/profile')
@@ -34,6 +33,7 @@ authRouter.route('/signup').post((req, res) => {
         }
     };
     addUser();
+
 
 })
 

@@ -14,27 +14,22 @@ authRouter.route('/signup').post((req, res) => {
 
     const dbName = 'test';
 
-    async function addUser() {
+    async function addUser(){
         let client;
-        try {
+        try{
             client = await MongoClient.connect(url);
 
             const db = client.db(dbName);
-            const user = { username, password };
-            await db.collection('user').insertMany(user);
-            // const results = await db.collection('user').insertOne(user)
-            debug(results)
-            req.login(results.ops[0], () => {
-                res.redirect('/auth/profile')
-            })
-        } catch (error) {
+            const user = {username, password};
+            const result = db.collection('user').insertOne(user)
+            debug(result)
+        }catch(error){
             debug(error)
-        } finally {
+        }finally{
             client.close()
         }
     };
     addUser();
-
 })
 
 authRouter.route('/profile').get((req, res) => {
